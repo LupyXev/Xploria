@@ -14,6 +14,7 @@ pygame.display.set_caption(GAME_NAME)
 clock = pygame.time.Clock()
 fps = 60
 
+
 if __name__ == "__main__":
     while True:
         for event in pygame.event.get():
