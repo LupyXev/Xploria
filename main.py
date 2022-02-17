@@ -1,5 +1,6 @@
 import pygame
-import player
+from player import Player
+from chunk import Chunk
 
 pygame.init()
 
