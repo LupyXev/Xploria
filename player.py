@@ -10,18 +10,18 @@ class Player(Entity):
     def data(self):
         return {"data": super().data(), "type": self.TYPE_NAME}
     
-    def InputMovement(self):        
-        self._CheckInputs()
+    def input_movement(self):        
+        self._check_inputs()
         x_mov = (self.keys[pygame.K_RIGHT] - self.keys[pygame.K_LEFT]) * self.speed
 
         self.velocity[0] = x_mov 
             
-    def ApplyMovement(self, fps):
+    def apply_movement(self, fps):
         self.velocity[1] += self.gravity * 1/fps
         self.pos = [self.pos[0] + self.velocity[0], self.pos[1] + self.velocity[1]]
         self.velocity[0] = 0
 
-    def ScreenBound(self):
+    def screen_bound(self):
         if self.pos[1] + self.velocity[1] + self.height > 720:
             self.velocity[1] = 0
             
@@ -31,7 +31,7 @@ class Player(Entity):
             self.velocity[0] = 0
         
     
-    def _CheckInputs(self):
+    def _check_inputs(self):
         inputs = pygame.key.get_pressed()
         for key in self.keys.keys():
             self.keys[key] = inputs[key]

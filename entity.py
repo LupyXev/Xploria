@@ -43,25 +43,25 @@ class Entity:
         self.entities_loaded.remove(self)
     
     @property  
-    def getPos(self):
+    def get_pos(self):
         self.pos = [self.x_pos, self.y_pos]
         return self.pos
     
     @property
-    def setPos(self, pos:tuple or list):
+    def set_pos(self, pos:tuple or list):
         self.pos = list(pos)
         self.x_pos = pos[0]
         self.y_pos = pos[1]
         
     @property
-    def setX(self, x_pos):
+    def set_x(self, x_pos):
         self.x_pos = x_pos
         self.pos = [x_pos, self.pos[1]]
         
     @property
-    def setY(self, y_pos):
+    def set_y(self, y_pos):
         self.x_pos = y_pos
         self.pos = [self.pos[0], y_pos]
     
-    def resetVelocity(self):
+    def reset_velocity(self):
         self.velocity = [0,0]

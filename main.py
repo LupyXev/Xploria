@@ -19,10 +19,10 @@ if __name__ == "__main__":
     while True:
         screen.fill("white")
         
-        player.InputMovement()
-        player.ScreenBound() # Test Methode
+        player.input_movement()
+        player.screen_bound() # Test Methode
         
-        player.ApplyMovement(fps)
+        player.apply_movement(fps)
         screen.blit(player.gfx, player.pos)
         
         
