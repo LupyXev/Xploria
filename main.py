@@ -1,5 +1,7 @@
 import pygame
 from player import Player
+from chunk import Chunk
+from blocks import *
 
 pygame.init()
 

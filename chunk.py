@@ -11,10 +11,10 @@ class Chunk:
 
     @classmethod
     def get_chunk(cls, chunk_x_pos, chunk_y_pos):
-        if (chunk_x_pos, chunk_y_pos) in loaded_chunks:
-            return loaded_chunks[(chunk_x_pos, chunk_y_pos)]
+        if (chunk_x_pos, chunk_y_pos) in cls.loaded_chunks:
+            return cls.loaded_chunks[(chunk_x_pos, chunk_y_pos)]
         else:
-            return cls.__init__(chunk_x_pos, chunk_y_pos)
+            return cls(chunk_x_pos, chunk_y_pos)
 
     def __init__(self, chunk_x_pos, chunk_y_pos):
         self.x_pos = chunk_x_pos
@@ -22,19 +22,23 @@ class Chunk:
         self.objects = {} #by position in the map tuple ex:{(2, 3): Obj0x13256156}
 
         #--- LOADING CHUNCK ---
-        if exists(f"map/{chunk_x_pos} {chunk_y_pos}.json"):
-            with open(f"map/{chunk_x_pos} {chunk_y_pos}.json", "r") as f:
+        if exists(f"save/map/{chunk_x_pos} {chunk_y_pos}.json"):
+            with open(f"save/map/{chunk_x_pos} {chunk_y_pos}.json", "r") as f:
                 json_data = load(f)
-            for obj_json in json_data:
-                entity_obj = self.ENTITY_TYPE_TO_CLASS[obj_json["type"]](**obj_json["data"]) #inits the entity
-                self.objects[(entity_obj.pos)] = entity_obj
+            for game_type_objs in json_data.values():
+                for obj_json in game_type_objs:
+                    entity_obj = self.ENTITY_TYPE_TO_CLASS[obj_json["type"]](**obj_json["data"]) #inits the entity
+                    self.objects[(entity_obj.pos)] = entity_obj
 
-    def add_object(self, object):
+    def add_obj(self, object):
         self.objects[(object.pos)] = object
     
     def save(self):
-        json_data = []
+        json_data = {
+            "entities": [],
+            "blocks": []
+        }
         for object in self.objects.values():
-            json_data.append(object.data())
-        with open(f"map/{self.x_pos} {self.y_pos}.json", "w") as f:
+            json_data[object.GAME_TYPE].append(object.data())
+        with open(f"save/map/{self.x_pos} {self.y_pos}.json", "w") as f:
             dump(json_data, f)
