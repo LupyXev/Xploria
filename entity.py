@@ -1,6 +1,7 @@
 class Entity:
     #this class is a basic class, its goal is to be used as inheritance
     entities_loaded = set() #to update entities (ex: for gravity) ex: {EntityObj0x051561, EntityObj0x56118}
+
     def __init__(self, x_pos, y_pos, base_speed, base_jump_height, base_jump_count, gfx, collision_on=True, gravity_sensitive=True, load=True):
         self.x_pos = x_pos
         self.y_pos = y_pos
