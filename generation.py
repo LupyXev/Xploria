@@ -1,10 +1,12 @@
 import pygame
+from perlin_noise import PerlinNoise
 
 
 class Generation:
 #creat and manage map generation
-    def __init__(self):
+    def __init__(self, seed):
         self.chunk_size = 16
+        self.noise = PerlinNoise(octaves=1, seed = seed)
 
     def generate_chunk(self, chunk_x:int, chunk_y:int):
         '''generate a chunk based on chunk position
@@ -19,12 +21,23 @@ class Generation:
                 world_y = chunk_y * self.chunk_size + local_y # determin the world position of a block in the chunk
 
                 #generation specifique shenanigans
-                if world_y > 10:
+
+                amplitude = 30
+                frequencies = .03
+                base_height = 10
+
+                pointHeight = int(
+                    self.noise(world_x*frequencies)*amplitude)+base_height
+
+                #print(pointHeight, end =" ")
+                if world_y > pointHeight:
                     block_list[local_y][local_x] = 1
+                
         return block_list
 
 
 #just for testing
-testgenerator = Generation()
+testgenerator = Generation(8857610046016419003)
 
-print(testgenerator.generate_chunk(0,1))
+print(testgenerator.generate_chunk(0,0), end="")
+print(testgenerator.generate_chunk(1,0))
