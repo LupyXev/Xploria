@@ -4,7 +4,7 @@ class Entity:
     def __init__(self, x_pos, y_pos, baseSpeed, baseJumpHeight, gfx, collision_on=True, gravity_sensitive=True, load=True):
         self.x_pos = x_pos
         self.y_pos = y_pos
-        self.pos = (x_pos, y_pos)
+        self.pos = [x_pos, y_pos]
         
         self.collision_on = collision_on
         self.gravity_sensitive = gravity_sensitive
@@ -20,7 +20,7 @@ class Entity:
         self.width = self.rect.width
         self.height = self.rect.height
         
-        self.gravity = 0 # Temporary
+        self.gravity = 9.81 #Modifying this value will affect gravity's resistance
 
         if load:
             self.load()
@@ -48,20 +48,20 @@ class Entity:
         return self.pos
     
     @property
-    def setPos(self, pos:tuple):
-        self.pos = pos
+    def setPos(self, pos:tuple or list):
+        self.pos = list(pos)
         self.x_pos = pos[0]
         self.y_pos = pos[1]
         
     @property
     def setX(self, x_pos):
         self.x_pos = x_pos
-        self.pos = (x_pos, self.pos[1]) 
+        self.pos = [x_pos, self.pos[1]]
         
     @property
     def setY(self, y_pos):
         self.x_pos = y_pos
-        self.pos = (self.pos[0], y_pos)    
+        self.pos = [self.pos[0], y_pos]
     
     def resetVelocity(self):
         self.velocity = [0,0]

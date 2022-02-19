@@ -22,7 +22,7 @@ if __name__ == "__main__":
         player.InputMovement()
         player.ScreenBound() # Test Methode
         
-        player.ApplyMovement()
+        player.ApplyMovement(fps)
         screen.blit(player.gfx, player.pos)
         
         
