@@ -1,6 +1,5 @@
 import pygame
 from player import Player
-from chunk import Chunk
 
 pygame.init()
 
@@ -14,12 +13,23 @@ pygame.display.set_caption(GAME_NAME)
 clock = pygame.time.Clock()
 fps = 60
 
+player = Player(0, 0, 3, 3)
 
 if __name__ == "__main__":
     while True:
+        screen.fill("white")
+        
+        player.InputMovement()
+        player.ScreenBound() # Test Methode
+        
+        player.ApplyMovement()
+        screen.blit(player.gfx, player.pos)
+        
+        
+        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-        screen.fill("white")
+        
         pygame.display.update()
         clock.tick(fps)
