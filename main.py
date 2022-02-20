@@ -4,6 +4,7 @@ from chunk import Chunk
 from blocks import *
 from entity import Entity
 from gui import FontRenderer
+from render import Render
 
 pygame.init()
 
@@ -26,16 +27,14 @@ fontrenderer = FontRenderer(screen)
 if __name__ == "__main__":
     while True:
         screen.fill("white")
-        
         player.input_movement()
         Entity.update_entities(fps)
 
         player.screen_bound() # Test Methode
         
         player.apply_movement(fps)
-
+        Render.render_blocks(Chunk.loaded_chunks,screen)
         screen.blit(player.gfx, player.pos)
-        
         
         
         for event in pygame.event.get():
