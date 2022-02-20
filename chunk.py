@@ -51,6 +51,8 @@ class Chunk:
                 for obj_json in game_type_objs:
                     entity_obj = self.ENTITY_TYPE_TO_CLASS[obj_json["type"]](**obj_json["data"]) #inits the entity
                     self.objects[(entity_obj.pos)] = entity_obj
+        
+        self.loaded_chunks[(chunk_x_pos, chunk_y_pos)] = self
 
     def add_obj(self, object):
         self.objects[(object.pos)] = object

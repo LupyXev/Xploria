@@ -1,4 +1,4 @@
-from pygame import image, Rect
+from pygame import image, Rect, transform
 
 tileset = image.load("assets/nature_tileset.png")
 class Block:
@@ -14,7 +14,7 @@ class Block:
         self.texture_name = texture_name
     
     @property
-    def get_surface(self):
+    def surface(self):
         return self.TEXTURES[self.texture_name]
     
     def data(self):
@@ -26,7 +26,7 @@ class Block:
     
 class Dirt(Block):
     TEXTURES = {
-        "dirt": tileset.subsurface(Rect(32, 32, 16, 16))
+        "dirt": transform.scale(tileset.subsurface(Rect(32, 32, 16, 16)), (Block.SIZE, Block.SIZE))
     }
     TYPE_NAME = "dirt"
 

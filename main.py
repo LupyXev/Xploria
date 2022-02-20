@@ -19,7 +19,6 @@ clock = pygame.time.Clock()
 fps = 60
 
 chunk = Chunk.get_chunk(0, 0)
-chunk.add_obj(Dirt(2, 22))
 player = Player(chunk, 0, 0)
 
 fontrenderer = FontRenderer(screen)
@@ -33,7 +32,7 @@ if __name__ == "__main__":
         player.screen_bound() # Test Methode
         
         player.apply_movement(fps)
-        Render.render_blocks(Chunk.loaded_chunks,screen)
+        Render.render_blocks(Chunk.loaded_chunks, screen)
         screen.blit(player.gfx, player.pos)
         
         
