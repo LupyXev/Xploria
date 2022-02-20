@@ -1,10 +1,10 @@
-import pygame
 from perlin_noise import PerlinNoise
 
 
 class Generation:
 #creat and manage map generation
     def __init__(self, seed):
+        """ Need a seed to initialize"""
         self.chunk_size = 16
         self.noise = PerlinNoise(octaves=1, seed = seed)
 
@@ -25,19 +25,17 @@ class Generation:
                 amplitude = 30
                 frequencies = .03
                 base_height = 10
-
-                pointHeight = int(
+                
+                #calculate for each block in the chunk the height of the y position block with perlin_noise
+                point_height = int(
                     self.noise(world_x*frequencies)*amplitude)+base_height
-
-                #print(pointHeight, end =" ")
-                if world_y > pointHeight:
+                
+                #test if the block tested is below the block height
+                if world_y > point_height:
                     block_list[local_y][local_x] = 1
                 
         return block_list
 
 
 #just for testing
-testgenerator = Generation(8857610046016419003)
-
-print(testgenerator.generate_chunk(0,0), end="")
-print(testgenerator.generate_chunk(1,0))
+testgenerator = Generation(seed = 8857610046016419003)
