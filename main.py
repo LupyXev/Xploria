@@ -3,6 +3,7 @@ from player import Player
 from chunk import Chunk
 from blocks import *
 from entity import Entity
+from gui import FontRenderer
 
 pygame.init()
 
@@ -20,6 +21,8 @@ chunk = Chunk.get_chunk(0, 0)
 chunk.add_obj(Dirt(2, 22))
 player = Player(chunk, 0, 0)
 
+fontrenderer = FontRenderer(screen)
+
 if __name__ == "__main__":
     while True:
         screen.fill("white")
@@ -31,8 +34,6 @@ if __name__ == "__main__":
         
         player.apply_movement(fps)
 
-        print(player.pos)
-
         screen.blit(player.gfx, player.pos)
         
         
@@ -41,5 +42,7 @@ if __name__ == "__main__":
             if event.type == pygame.QUIT:
                 pygame.quit()
         
+        fontrenderer.draw_string(str(player.pos), (0,0), (0,0,0), size = 20, antialiased = True)
+
         pygame.display.update()
         clock.tick(fps)
