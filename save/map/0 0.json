@@ -1,1 +1,1 @@
-{"entities": [], "blocks": [{"data": {"x_pos": 0, "y_pos": 0, "texture": "dirt"}, "type": "dirt"}]}
+{"entities": [], "blocks": [{"data": {"x_pos": 0, "y_pos": 0, "texture_name": "dirt"}, "type": "dirt"}]}

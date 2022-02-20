@@ -3,8 +3,8 @@ import pygame
 
 class Player(Entity): 
     TYPE_NAME = 'player'
-    def __init__(self, x_pos, y_pos):
-        super().__init__(x_pos, y_pos, 3, 3, 1, pygame.image.load("assets/player.png").convert_alpha())
+    def __init__(self, chunk, x_pos, y_pos):
+        super().__init__(chunk, x_pos, y_pos, 3, 3, 1, pygame.image.load("assets/player.png").convert_alpha())
         self.keys = {pygame.K_UP: 0, pygame.K_DOWN: 0, pygame.K_RIGHT: 0, pygame.K_LEFT: 0, pygame.K_SPACE:0}
 
     def data(self):
@@ -18,15 +18,12 @@ class Player(Entity):
         #if self.is_jumping is False:      
         y_mov = -1 * max(self.keys[pygame.K_UP], self.keys[pygame.K_SPACE]) * self.jump_height
         #    self.is_jumping = True
-            
-        print(y_mov)
-        
+                
         self.velocity[0] += x_mov
         self.velocity[1] += y_mov
         
     
     def apply_movement(self, fps):
-        self.velocity[1] += self.gravity * 1/fps
         self.pos = [self.pos[0] + self.velocity[0], self.pos[1] + self.velocity[1]]
         self.velocity[0] = 0
 
