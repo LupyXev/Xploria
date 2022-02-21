@@ -1,4 +1,5 @@
 import pygame
+from sys import exit
 from player import Player
 from chunk import Chunk
 from blocks import *

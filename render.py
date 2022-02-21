@@ -10,4 +10,4 @@ class Render:
         for chunk in chunks :
             for object in chunk.objects.items():
                 screen.blit(object[1].surface, object[0])
-                pygame.display.update()
+                
