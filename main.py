@@ -4,8 +4,9 @@ from player import Player
 from chunk import Chunk
 from blocks import *
 from entity import Entity
-from gui import FontRenderer
+from gui import FontRenderer, GuiManager
 from render import Render
+from menu.debug_menu import DebugMenu
 
 pygame.init()
 
@@ -23,6 +24,10 @@ chunk = Chunk.get_chunk(0, 0)
 player = Player(chunk, 0, 0)
 
 fontrenderer = FontRenderer(screen)
+gui_manager = GuiManager()
+debug = DebugMenu(clock,player)
+
+gui_manager.add_gui(debug)
 
 if __name__ == "__main__":
     while True:
@@ -35,13 +40,16 @@ if __name__ == "__main__":
         player.apply_movement(fps)
         Render.render_blocks(Chunk.loaded_chunks, screen)
         screen.blit(player.gfx, player.pos)
-        
-        
+       
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
+                exit()
+            gui_manager.event_handler(event)
         
-        fontrenderer.draw_string(str(player.pos), (0,0), (0,0,0), size = 20, antialiased = True)
-
+        
+        gui_manager.draw_gui()
+        
         pygame.display.update()
         clock.tick(fps)
