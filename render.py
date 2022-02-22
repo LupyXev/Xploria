@@ -8,6 +8,7 @@ class Render:
         '''function which handle graphics on the display'''
         chunks = [chunk for chunk in loaded_chunks.values()] 
         for chunk in chunks :
-            for object in chunk.objects.items():
-                screen.blit(object[1].surface, object[0])
+            for object in chunk.objects.values():
+                screen.blit(object.surface, object.coords.pixel_coords)
+                #screen.set_at(object.coords.pixel_coords, (255, 255, 0))
                 

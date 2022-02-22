@@ -1,4 +1,5 @@
 from pygame import image, Rect, transform
+from general_utils import Coords
 
 tileset = image.load("assets/nature_tileset.png")
 class Block:
@@ -8,9 +9,9 @@ class Block:
     height = SIZE
     TEXTURES = {} #will be ovewrited in sub classes
     GAME_TYPE = "blocks"
-    def __init__(self, x_pos, y_pos, texture_name:str):
+    def __init__(self, coords:Coords, texture_name:str):
         self.collision_on = True
-        self.pos = (x_pos, y_pos)
+        self.coords = coords
         self.texture_name = texture_name
     
     @property
@@ -19,19 +20,19 @@ class Block:
     
     def data(self):
         return {
-            "x_pos": self.pos[0],
-            "y_pos": self.pos[1],
+            "x_pos": self.coords.x_block_coords,
+            "y_pos": self.coords.y_block_coords,
             "texture_name": self.texture_name
         }
     
 class Dirt(Block):
     TEXTURES = {
-        "dirt": transform.scale(tileset.subsurface(Rect(32, 32, 16, 16)), (Block.SIZE, Block.SIZE))
+        "dirt": transform.scale(tileset.subsurface(Rect(16, 0, 16, 16)), (Block.SIZE, Block.SIZE))
     }
     TYPE_NAME = "dirt"
 
-    def __init__(self, x_pos, y_pos, texture_name:str="dirt"):
-        super().__init__(x_pos, y_pos, texture_name)
+    def __init__(self, coords:Coords, texture_name:str="dirt"):
+        super().__init__(coords, texture_name)
 
     def data(self):
         return {"data": super().data(), "type": self.TYPE_NAME}
