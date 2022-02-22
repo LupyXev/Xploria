@@ -7,7 +7,7 @@ class FontRenderer:
         self.display = screen #the diplay surface
         self.font = font #the font to render (can be change)
     
-    def draw_string(self,string:str, coords:Coords, color:tuple, size:int=10, antialiased:bool=False):
+    def draw_string(self,string:str, coords:Coords, color:tuple, size:int=10, antialiased:bool=True):
 
         #create a new font object with the right size and font
         self.font_object = pygame.font.Font(self.font, size)

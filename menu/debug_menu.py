@@ -11,7 +11,13 @@ class DebugMenu(Gui):
     
     def draw(self):
         fr = FontRenderer(self.display)
-        player_pos_str = "x: " + str(int(self.player.coords.pixel_coords[0])) + " y: " + str(int(self.player.coords.pixel_coords[1]))
-        fr.draw_string(player_pos_str, Coords((0,0), Coords.PIXEL_TYPE), (255,0,255), size = 20, antialiased = True)
+
+        player_pos_str = "Pixel pos "+"x: " + str(int(self.player.coords.pixel_coords[0])) + " y: " + str(int(self.player.coords.pixel_coords[1]))
+        fr.draw_string(player_pos_str, Coords((0,40), Coords.PIXEL_TYPE), (255,0,255), size = 20, antialiased = True)
+
         fr.draw_string(f"Vel: {self.player.velocity}", Coords((0, 20), Coords.PIXEL_TYPE), (255,0,255), 20)
-        fr.draw_string("fps: "+str(int(self.clock.get_fps())), Coords((0, 40), Coords.PIXEL_TYPE), (255,0,255), 20)
+        
+        fr.draw_string("fps: "+str(int(self.clock.get_fps())), Coords((0, 0), Coords.PIXEL_TYPE), (255,0,255), 20)
+
+        fr.draw_string(f"Block pos x: {round(self.player.coords.block_coords[0],3)} y: {round(self.player.coords.block_coords[1],3)}", Coords((0,60), Coords.PIXEL_TYPE), (255,0,255),20)
+        
