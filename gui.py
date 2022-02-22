@@ -35,7 +35,7 @@ class GuiManager:
         self.list_event = dict()
 
     def add_gui(self,gui:Gui):
-        if type(gui) != type(gui):
+        if not issubclass(type(gui),Gui):
             raise ValueError("gui must be a Gui object")
 
         self.all_gui[gui.name] = gui

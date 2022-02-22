@@ -37,8 +37,9 @@ if __name__ == "__main__":
         Entity.update_entities(fps)
         player.update_loaded_chunks()
 
+        Render.calculate_scrolling(player, screen)
         Render.render_blocks(Chunk.loaded_chunks, screen)
-        screen.blit(player.gfx, player.coords.pixel_coords)
+        Render.render_player(player, screen)
         
         
         for event in pygame.event.get():
