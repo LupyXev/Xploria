@@ -23,9 +23,6 @@ fps = 60
 
 chunk = Chunk.get_chunk(Coords((0, 0), Coords.CHUNK_TYPE))
 player = Player(chunk, Coords((10, 0), Coords.BLOCK_TYPE))
-low_chunk = Chunk.get_chunk(Coords((0, 1), Coords.CHUNK_TYPE))
-for i in range(16):
-    low_chunk.add_obj(Dirt(Coords((i, 21), Coords.BLOCK_TYPE)))
 
 fontrenderer = FontRenderer(screen)
 gui_manager = GuiManager()
@@ -38,6 +35,7 @@ if __name__ == "__main__":
         screen.fill("white")
         player.input_movement(fps)
         Entity.update_entities(fps)
+        player.update_loaded_chunks()
 
         Render.render_blocks(Chunk.loaded_chunks, screen)
         screen.blit(player.gfx, player.coords.pixel_coords)

@@ -3,6 +3,7 @@ from json import load, dump
 from player import Player
 from blocks import *
 from general_utils import Coords
+from generation import Generator
 
 class Chunk:
     #allows to save and load chunks
@@ -13,6 +14,7 @@ class Chunk:
         "player": Player,
         "dirt": Dirt
     }
+    generator = Generator(8857610046016419003)
 
     @classmethod
     def get_chunk(cls, coords:Coords):
@@ -20,6 +22,7 @@ class Chunk:
         if chunk_coords in cls.loaded_chunks:
             return cls.loaded_chunks[chunk_coords]
         else:
+            print("loading chunk", coords.chunk_coords_rounded)
             return cls(coords)
     
     @classmethod
@@ -60,6 +63,14 @@ class Chunk:
                     entity_coords = Coords((obj_json["data"].pop("x_pos"), obj_json["data"].pop("y_pos")), Coords.BLOCK_TYPE)
                     entity_obj = self.ENTITY_TYPE_TO_CLASS[obj_json["type"]](entity_coords, **obj_json["data"]) #inits the entity
                     self.objects[tuple(entity_obj.coords.block_coords)] = entity_obj
+        else:
+            #generating new chunk
+            block_list = self.generator.generate_chunk(*coords.chunk_coords_rounded)
+            for in_chunk_y in range(len(block_list)):
+                for in_chunk_x in range(len(block_list[in_chunk_y])):
+                    value = block_list[in_chunk_y][in_chunk_x]
+                    if value == 1:
+                        self.add_obj(Dirt(Coords((self.coords.block_coords[0] + in_chunk_x, self.coords.block_coords[1] + in_chunk_y), Coords.BLOCK_TYPE)))
         
         self.loaded_chunks[(chunk_x_pos, chunk_y_pos)] = self
 
@@ -75,3 +86,8 @@ class Chunk:
             json_data[object.GAME_TYPE].append(object.data())
         with open(f"save/map/{self.coords.chunk_coords_rounded[0]} {self.coords.chunk_coords_rounded[1]}.json", "w") as f:
             dump(json_data, f)
+    
+    def unload(self):
+        print("unloading chunk", self.coords.chunk_coords_rounded)
+        #self.save()
+        self.loaded_chunks.pop(self.coords.chunk_coords_rounded)

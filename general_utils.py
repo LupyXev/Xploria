@@ -42,7 +42,7 @@ class Coords:
     
     @property
     def chunk_coords_rounded(self):
-        return [c//self.CHUNK_SIZE for c in self._coords]
+        return tuple([c//self.CHUNK_SIZE for c in self._coords])
     
 
     def set_coords(self, coords:tuple or list, coords_type):

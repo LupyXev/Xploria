@@ -8,6 +8,7 @@ class Entity:
         for entity in cls.entities_loaded:
             if entity.collision_on:
                 entity._update_with_gravity(fps)
+                entity.chunk = entity.chunk.get_chunk(entity.coords)
 
     def __init__(self, chunk, coords, base_speed, base_jump_height, base_jump_count, gfx, collision_on=True, gravity_sensitive=True, load=True):
         self.coords = coords

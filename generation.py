@@ -1,7 +1,7 @@
 from perlin_noise import PerlinNoise
 
 
-class Generation:
+class Generator:
 #creat and manage map generation
     def __init__(self, seed):
         """ Need a seed to initialize"""
@@ -36,6 +36,7 @@ class Generation:
                 
         return block_list
 
-
+'''
 #just for testing
 testgenerator = Generation(seed = 8857610046016419003)
+'''

@@ -20,8 +20,8 @@ class Block:
     
     def data(self):
         return {
-            "x_pos": self.coords.x_block_coords,
-            "y_pos": self.coords.y_block_coords,
+            "x_pos": self.coords.x_block_coord,
+            "y_pos": self.coords.y_block_coord,
             "texture_name": self.texture_name
         }
     
