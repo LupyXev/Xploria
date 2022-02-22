@@ -4,9 +4,10 @@ from player import Player
 from chunk import Chunk
 from blocks import *
 from entity import Entity
-from gui import FontRenderer
+from gui import FontRenderer, GuiManager
 from render import Render
 from general_utils import Coords
+from menu.debug_menu import DebugMenu
 
 pygame.init()
 
@@ -27,6 +28,10 @@ for i in range(16):
     low_chunk.add_obj(Dirt(Coords((i, 21), Coords.BLOCK_TYPE)))
 
 fontrenderer = FontRenderer(screen)
+gui_manager = GuiManager()
+debug = DebugMenu(clock,player)
+
+gui_manager.add_gui(debug)
 
 if __name__ == "__main__":
     while True:
@@ -41,10 +46,11 @@ if __name__ == "__main__":
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
+                exit()
+            gui_manager.event_handler(event)
         
-        fontrenderer.draw_string(str(player.coords.pixel_coords), Coords((0, 0), Coords.PIXEL_TYPE), (0,0,0), size = 20, antialiased = True)
-
-        fontrenderer.draw_string(str(player.velocity), Coords((0, 25), Coords.PIXEL_TYPE), (0,0,0), size = 20, antialiased = True)
-
+        
+        gui_manager.draw_gui()
+        
         pygame.display.update()
         clock.tick(fps)
