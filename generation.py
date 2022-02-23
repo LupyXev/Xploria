@@ -1,4 +1,5 @@
 from perlin_noise import PerlinNoise
+import blocks
 
 
 class Generator:
@@ -6,7 +7,8 @@ class Generator:
     def __init__(self, seed):
         """ Need a seed to initialize"""
         self.chunk_size = 16
-        self.noise = PerlinNoise(octaves=1, seed = seed)
+        self.seed = seed
+        self.noise = PerlinNoise(octaves=1, seed = self.seed)
 
     def generate_chunk(self, chunk_x:int, chunk_y:int):
         '''generate a chunk based on chunk position
@@ -22,8 +24,8 @@ class Generator:
 
                 #generation specifique shenanigans
 
-                amplitude = 30
-                frequencies = .03
+                amplitude = 75
+                frequencies = .007
                 base_height = 10
                 
                 #calculate for each block in the chunk the height of the y position block with perlin_noise
@@ -33,6 +35,9 @@ class Generator:
                 #test if the block tested is below the block height
                 if world_y > point_height:
                     block_list[local_y][local_x] = 1
+                
+                if world_y == point_height:
+                    block_list[local_y][local_x] = 2
                 
         return block_list
 
