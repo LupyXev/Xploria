@@ -12,9 +12,10 @@ class Chunk:
     loaded_chunks = {} #loaded chunks by pos (ex: {(x, y): ChunkObj0x14561})
     ENTITY_TYPE_TO_CLASS = {
         "player": Player,
-        "dirt": Dirt
+        "dirt": Dirt,
+        "grassy_dirt": GrassyDirt
     }
-    generator = Generator(8857610046016419003)
+    generator = Generator(8857610046016419000)
 
     @classmethod
     def get_chunk(cls, coords:Coords):
