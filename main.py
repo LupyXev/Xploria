@@ -1,13 +1,5 @@
 import pygame
 from sys import exit
-from player import Player
-from chunk import Chunk
-from blocks import *
-from entity import Entity
-from gui import FontRenderer, GuiManager
-from render import Render
-from general_utils import Coords
-from menu.debug_menu import DebugMenu
 
 pygame.init()
 
@@ -17,6 +9,16 @@ GAME_NAME = "Xploria Game"
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
 pygame.display.set_caption(GAME_NAME)
+
+from player import Player
+from chunk import Chunk
+from blocks import *
+from entity import Entity
+from gui import FontRenderer, GuiManager
+from render import Render
+from general_utils import Coords
+from menu.debug_menu import DebugMenu
+
 
 clock = pygame.time.Clock()
 fps = 60

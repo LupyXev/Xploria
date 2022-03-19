@@ -1,7 +1,7 @@
 from pygame import image, Rect, transform
 from general_utils import Coords, CollideBox
 
-tileset = image.load("assets/nature_tileset.png")
+tileset = image.load("assets/dirt_tile.png").convert_alpha()
 class Block:
     #this class is a basic class, its goal is to be used as inheritance
     SIZE = 32 #in pixels
@@ -26,7 +26,7 @@ class Block:
     
 class Dirt(Block):
     TEXTURES = {
-        "dirt": transform.scale(tileset.subsurface(Rect(16, 0, 16, 16)), (Block.SIZE, Block.SIZE))
+        "dirt": transform.scale(tileset.subsurface(Rect(16, 16, 16, 16)), (Block.SIZE, Block.SIZE))
     }
     TYPE_NAME = "dirt"
 
@@ -43,5 +43,12 @@ class GrassyDirt(Block):
         "down_left_corner": None,
         "up_right_corner": None,
         "down_right_corner": None,
-        "up_edge": None
+        "up_edge": transform.scale(tileset.subsurface(Rect(16, 0, 16, 16)), (Block.SIZE, Block.SIZE))
     }
+    TYPE_NAME = "grassy_dirt"
+
+    def __init__(self,coords:Coords, texture_name:str="up_edge"):
+        super().__init__(coords, texture_name)
+    
+    def data(self):
+        return {"data": super().data(), "type": self.TYPE_NAME}

@@ -104,6 +104,8 @@ class Chunk:
                     value = block_list[in_chunk_y][in_chunk_x]
                     if value == 1:
                         self.add_obj(Dirt(Coords((self.coords.block_coords[0] + in_chunk_x, self.coords.block_coords[1] + in_chunk_y), Coords.BLOCK_TYPE)))
+                    if value == 2:
+                        self.add_obj(GrassyDirt(Coords((self.coords.block_coords[0] + in_chunk_x, self.coords.block_coords[1] + in_chunk_y), Coords.BLOCK_TYPE)))
         
         self.loaded_chunks[(chunk_x_pos, chunk_y_pos)] = self
 
