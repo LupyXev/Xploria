@@ -1,10 +1,13 @@
 from entity import Entity
 import pygame
-from general_utils import Coords
+from general_utils import Coords, CollideBox
 
 class Player(Entity): 
     TYPE_NAME = 'player'
+    WIDTH = 1 #in blocks
+    HEIGHT = 2 #in blocks
     def __init__(self, chunk, coords:Coords):
+        coords.collide_box = CollideBox(self.WIDTH, self.HEIGHT)
         super().__init__(chunk, coords, 10, 20, 1, pygame.image.load("assets/player.png").convert_alpha())
         self.keys = {pygame.K_UP: 0, pygame.K_DOWN: 0, pygame.K_RIGHT: 0, pygame.K_LEFT: 0, pygame.K_SPACE:0}
         self.air_x_resistance = 8
@@ -24,7 +27,8 @@ class Player(Entity):
         
         if self.on_ground:
             self.velocity[1] += -1 * max(self.keys[pygame.K_UP], self.keys[pygame.K_SPACE]) * self.jump_height * 1/fps
-            self.on_ground = False
+            if self.velocity[1] != 0:
+                self.on_ground = False
     
     def _check_inputs(self):
         inputs = pygame.key.get_pressed()
@@ -40,7 +44,6 @@ class Player(Entity):
             if chunk_coords[0] < min_x_chunk or chunk_coords[0] > max_x_chunk:
                 chunk.unload()
             elif chunk_coords[1] < min_y_chunk or chunk_coords[1] > max_y_chunk:
-                print(chunk_coords)
                 chunk.unload()
 
         #load chunks

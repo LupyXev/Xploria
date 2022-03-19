@@ -22,7 +22,7 @@ clock = pygame.time.Clock()
 fps = 60
 
 chunk = Chunk.get_chunk(Coords((0, 0), Coords.CHUNK_TYPE))
-player = Player(chunk, Coords((10, 0), Coords.BLOCK_TYPE))
+player = Player(chunk, Coords((0, 0), Coords.BLOCK_TYPE, (1, 2)))
 
 fontrenderer = FontRenderer(screen)
 gui_manager = GuiManager()
@@ -44,6 +44,8 @@ if __name__ == "__main__":
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                for chunk in tuple(Chunk.loaded_chunks.values()):
+                    chunk.unload()
                 pygame.quit()
                 exit()
             gui_manager.event_handler(event)

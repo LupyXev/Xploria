@@ -1,16 +1,15 @@
 from pygame import image, Rect, transform
-from general_utils import Coords
+from general_utils import Coords, CollideBox
 
 tileset = image.load("assets/nature_tileset.png")
 class Block:
     #this class is a basic class, its goal is to be used as inheritance
-    SIZE = 32
-    width = SIZE
-    height = SIZE
+    SIZE = 32 #in pixels
     TEXTURES = {} #will be ovewrited in sub classes
     GAME_TYPE = "blocks"
     def __init__(self, coords:Coords, texture_name:str):
         self.collision_on = True
+        coords.collide_box = CollideBox(1, 1) #1, 1 bc a block has a 1 block x 1 block collide box
         self.coords = coords
         self.texture_name = texture_name
     

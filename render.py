@@ -15,7 +15,7 @@ class Render:
                 #screen.set_at(object.coords.pixel_coords, (255, 255, 0))
     @classmethod
     def render_player(self, player, screen):
-        screen.blit(player.gfx, (player.coords.pixel_coords[0]-self.scrolling[0], player.coords.pixel_coords[1]-self.scrolling[1]))
+        screen.blit(player.texture, (player.coords.pixel_coords[0]-self.scrolling[0], player.coords.pixel_coords[1]-self.scrolling[1]))
 
     @classmethod
     def calculate_scrolling(self, player, screen):

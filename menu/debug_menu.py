@@ -20,4 +20,5 @@ class DebugMenu(Gui):
         fr.draw_string("fps: "+str(int(self.clock.get_fps())), Coords((0, 0), Coords.PIXEL_TYPE), (255,0,255), 20)
 
         fr.draw_string(f"Block pos x: {round(self.player.coords.block_coords[0],3)} y: {round(self.player.coords.block_coords[1],3)}", Coords((0,60), Coords.PIXEL_TYPE), (255,0,255),20)
-        
+        fr.draw_string(f"Cur chunk: {self.player.chunk.coords.chunk_coords}", Coords((0,80), Coords.PIXEL_TYPE), (255,0,255),20)
+

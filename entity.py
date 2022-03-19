@@ -1,4 +1,5 @@
 from general_utils import Coords
+from pygame import Surface
 class Entity:
     #this class is a basic class, its goal is to be used as inheritance
     entities_loaded = set() #to update entities (ex: for gravity) ex: {EntityObj0x051561, EntityObj0x56118}
@@ -10,7 +11,7 @@ class Entity:
                 entity._update_with_gravity(fps)
                 entity.chunk = entity.chunk.get_chunk(entity.coords)
 
-    def __init__(self, chunk, coords, base_speed, base_jump_height, base_jump_count, gfx, collision_on=True, gravity_sensitive=True, load=True):
+    def __init__(self, chunk, coords:Coords, base_speed, base_jump_height, base_jump_count, texture:Surface, collision_on=True, gravity_sensitive=True, load=True):
         self.coords = coords
         self.chunk = chunk
         
@@ -26,10 +27,9 @@ class Entity:
         self.is_jumping = False # jumping state to disable flying issues
         self.jump_count = base_jump_count # prototype
         
-        self.gfx = gfx # (Coming soon) Entity texture
-        self.rect = self.gfx.get_rect()
-        self.width = self.rect.width
-        self.height = self.rect.height
+        self.texture = texture
+        self.width = self.texture.get_width()
+        self.height = self.texture.get_height()
         
         self.gravity = 0.981 #Modifying this value will affect gravity's resistance
         self.on_ground = None
@@ -38,26 +38,26 @@ class Entity:
             self.load()
     
     def _update_with_gravity(self, fps):
-        self.velocity[1] += self.gravity * 1/fps
+        if not self.on_ground:
+            self.velocity[1] += self.gravity * 1/fps
         
-        future_y_pos = self.coords.block_coords[1] + self.velocity[1]
-        y_upper_collision = self.chunk.get_collision(
+        if self.velocity == [0, 0]:
+            return
+        
+        wanted_coords = Coords([self.coords.x_block_coord + self.velocity[0], self.coords.block_coords[1] + self.velocity[1]], Coords.BLOCK_TYPE, self.coords.collide_box)
+        collided, final_coords, vel_multiplier = self.chunk.get_collision(
             initial_coords=self.coords,
-            future_coords=Coords((self.coords.block_coords[0], future_y_pos), Coords.BLOCK_TYPE),
-            height=self.height,
-            return_y_collision=True
+            wanted_coords=wanted_coords,
         )
-        #print(y_upper_collision, self.velocity, future_y_pos)
-        if y_upper_collision is not None:
-            #will collide
-            self.velocity[1] = 0 #bc when it touches the ground, velocity y must be 0
-            self.coords.set_y(y_upper_collision, self.coords.BLOCK_TYPE) #it is on ground
-            self.on_ground = True
+        if collided:
+            self.velocity = [self.velocity[i]*vel_multiplier[i] for i in range(2)]
+            if vel_multiplier[1] == 0:
+                self.on_ground = True
+            else:
+                self.on_ground = False
         else:
             self.on_ground = False
-            self.coords.set_y(future_y_pos, self.coords.BLOCK_TYPE)
-        
-        self.coords.set_x(self.coords.x_block_coord + self.velocity[0], self.coords.BLOCK_TYPE)
+        self.coords = final_coords
 
     def data(self):
         return {
